@@ -1,13 +1,14 @@
-import { merge } from '@ditojs/utils'
+import { merge } from "@ditojs/utils"
+import type LocalConfig from './index.local'
+import type ProductionConfig from './index.production'
+import type DevelopmentConfig from './index.development'
 
-const { env } = process
-
-const mode = env.NODE_ENV || 'development'
-const host = env.NODE_HOST || env.HOST || '0.0.0.0'
-const port = env.NODE_PORT || env.PORT || 8080
+const env = <'development' | 'production'>process.env.NODE_ENV || 'development'
+const host = process.env.NODE_HOST || process.env.HOST || '0.0.0.0'
+const port = process.env.NODE_PORT || process.env.PORT || '8080'
 
 const config = {
-  env: mode,
+  env,
 
   server: {
     host,
@@ -15,7 +16,7 @@ const config = {
   },
 
   log: {
-    request: false,
+    requests: false,
     routes: false,
     schema: false,
     relations: false,
@@ -28,8 +29,7 @@ const config = {
     proxy: true,
     session: true,
     passport: true,
-    etag: true,
-    csrf: true
+    etag: true
   },
 
   knex: {
@@ -38,7 +38,7 @@ const config = {
   },
 
   admin: { // Used by AdminController
-    mode: mode === 'development' ? 'development' : 'production',
+    mode: env === 'development' ? 'development' : 'production',
     build: {
       path: './src/admin',
       eslint: false
@@ -60,7 +60,7 @@ const config = {
     // Additional settings can be exposed to the browser side through the
     // `settings` object, accessible as `global.dito.settings` in the browser.
     settings: {
-      env: mode
+      env
     }
   },
 
@@ -69,9 +69,9 @@ const config = {
   services: {}
 }
 
-function loadConfig(type) {
+function loadConfig<T>(type: string): T | null {
   try {
-    const config = require(`./index.${type}.js`)
+    const config = require(`./index.${type}`)
     return config && config.default || config || null
   } catch (e) {
     return null
@@ -80,6 +80,6 @@ function loadConfig(type) {
 
 export default merge(
   config,
-  loadConfig('local'),
-  loadConfig(config.env)
+  loadConfig<typeof LocalConfig>('local'),
+  loadConfig<typeof ProductionConfig | typeof DevelopmentConfig>(env)
 )

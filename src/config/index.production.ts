@@ -1,9 +1,13 @@
-export default {
+import { ApplicationConfig } from '@ditojs/server'
+
+const config: ApplicationConfig = {
   log: {
-    request: true,
+    requests: true,
     routes: false,
     schema: false,
     relations: false,
     sql: false
   }
 }
+
+export default config

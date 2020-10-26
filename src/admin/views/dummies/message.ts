@@ -1,4 +1,7 @@
-export const message = {
+import type { Message } from '@/models/message'
+import type { Form } from '@ditojs/admin'
+
+export const message: Form<Message> = {
   compact: true,
   components: {
     text: {

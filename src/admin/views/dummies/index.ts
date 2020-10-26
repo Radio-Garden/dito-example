@@ -1,6 +1,8 @@
+import type { View } from '@ditojs/admin'
 import { labelize } from '@ditojs/utils'
+import type { Dummy } from '@/models/dummy'
 
-export const dummies = {
+export const dummies: View<Dummy> = {
   type: 'list',
   label: 'Dummies',
   form: import('./dummy'),

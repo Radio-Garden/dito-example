@@ -1,6 +1,6 @@
-export default {
+const config = {
   log: {
-    request: true,
+    requests: true,
     routes: true,
     schema: false,
     relations: false,
@@ -31,3 +31,5 @@ export default {
     }
   }
 }
+
+export default config

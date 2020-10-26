@@ -1,13 +1,15 @@
-import { Controller, action, returns } from '@ditojs/server'
+import { Controller, ControllerAction } from '@ditojs/server'
 
 export class Test extends Controller {
   path = 'test'
 
-  @action('get', '.')
-  @returns({
-    type: 'string'
-  })
-  whatever() {
-    return 'hello'
+  whatever: ControllerAction<Test> = {
+    action: ['get', '.'],
+    handler() {
+      return 'hello'
+    },
+    returns: {
+      type: 'string'
+    }
   }
 }

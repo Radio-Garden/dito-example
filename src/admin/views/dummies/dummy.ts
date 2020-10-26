@@ -1,4 +1,7 @@
-export const dummy = {
+import type { Form } from '@ditojs/admin';
+import type { Dummy } from '@/models/dummy'
+
+export const dummy : Form<Dummy> = {
   clipboard: true,
 
   tabs: {
@@ -34,8 +37,7 @@ export const dummy = {
         dateOfBirth: {
           type: 'datetime',
           label: 'Date of Birth',
-          width: '50%',
-          seconds: true
+          width: '50%'
         },
 
         tags: {
@@ -55,8 +57,8 @@ export const dummy = {
           searchable: true,
           placeholder: 'Select or search country',
           options: {
-            data() {
-              return this.load({
+            data({ request }) {
+              return request({
                 url: 'https://cdn.rawgit.com/lukes/ISO-3166-Countries-with-Regional-Codes/d4031492/all/all.json',
                 cache: 'global'
               })
@@ -105,7 +107,6 @@ export const dummy = {
           type: 'switch',
           label: 'Verified Address',
           width: 'auto',
-          size: { width: 55 },
           labels: { checked: 'yes', unchecked: 'no' },
           default: false
         },
@@ -140,7 +141,7 @@ export const dummy = {
       resource: {
         method: 'patch'
       },
-      if: ({ formComponent }) => !formComponent.isCreating
+      if: ({ formComponent }) => !formComponent?.isCreating
     }
   }
 }

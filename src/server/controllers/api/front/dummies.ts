@@ -1,40 +1,46 @@
-import { ModelController, action, parameters, returns } from '@ditojs/server'
+import {
+  ModelController,
+  ModelControllerMemberActions,
+  ModelControllerActions
+} from '@ditojs/server'
 import { Dummy } from '@/models'
 
-export class Dummies extends ModelController {
+export class Dummies extends ModelController<Dummy> {
   modelClass = Dummy
 
-  member = {
+  member: ModelControllerMemberActions<Dummies> = {
     allow: ['find', 'hello'],
-
-    @action('get')
-    @parameters(
-      { member: true },
-      {
-        name: 'msg',
-        type: 'string',
-        required: true
+    hello: {
+      action: 'get',
+      parameters: [
+        { member: true },
+        {
+          name: 'msg',
+          type: 'string',
+          required: true
+        }
+      ],
+      returns: {
+        name: 'greeting',
+        type: 'string'
+      },
+      handler(ctx, dummy, msg: string) {
+        return `Hello ${dummy.fullName}: ${msg}`
       }
-    )
-    @returns({
-      name: 'greeting',
-      type: 'string'
-    })
-    hello(ctx, dummy, msg) {
-      return `Hello ${dummy.fullName}: ${msg}`
     }
   }
 
-  collection = {
+  collection: ModelControllerActions<Dummies> = {
     allow: ['find', 'wait'],
-
-    @action('get')
-    @returns({
-      type: 'string'
-    })
-    async wait() {
-      await Promise.delay(1000)
-      return 'One second has passed.'
+    wait: {
+      action: 'get',
+      returns: {
+        type: 'string'
+      },
+      async handler() {
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        return 'One second has passed.'
+      }
     }
   }
 }

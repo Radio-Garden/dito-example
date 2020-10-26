@@ -1,24 +1,25 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "node": "10"
-      },
-      "corejs": 3,
-      "useBuiltIns": "usage"
-    }],
-    "@ditojs/babel-preset"
+    "@babel/typescript",
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "node": "14"
+        },
+        "corejs": 3,
+        "useBuiltIns": "usage"
+      }
+    ]
   ],
   "plugins": [
-    ["module-resolver", {
-      "cwd": "packagejson",
-      "alias": {
-        "~": ".",
-        "@": "./src/server"
+    [
+      "module-resolver",
+      {
+        "cwd": "packagejson"
       }
-    }],
-    "dynamic-import-node",
-    "transform-promise-to-bluebird"
+    ],
+    "dynamic-import-node"
   ],
   "comments": false
 }

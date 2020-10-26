@@ -2,9 +2,10 @@
   "compilerOptions": {
     "target": "ES2020",
     "experimentalDecorators": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@/*": ["./src/server/*"]
     },
     "esModuleInterop": true,
     "declaration": true,

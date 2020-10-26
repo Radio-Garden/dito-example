@@ -1,12 +1,11 @@
-import { ModelController } from '@ditojs/server'
+import { ModelController, ModelControllerActions } from '@ditojs/server'
 import { Dummy } from '@/models'
-
-export class Dummies extends ModelController {
+export class Dummies extends ModelController<Dummy> {
   modelClass = Dummy
   scope = '^admin'
   graph = true
 
-  collection = {
+  collection: ModelControllerActions<Dummies> = {
     allow: ['find', 'insert']
   }
 
