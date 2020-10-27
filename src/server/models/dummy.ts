@@ -40,19 +40,9 @@ export class Dummy extends TimeStampedModel {
   }
 
   static filters: ModelFilters<Dummy> = {
-    lastName: {
-      filter: 'text'
-    },
     name: {
-      parameters: [
-        {
-          name: 'name',
-          type: 'text'
-        }
-      ],
-      filter: (builder, name: string) => {
-        builder.where('firstName', name)
-      }
+      filter: 'text',
+      properties: ['firstName', 'lastName']
     }
   }
 
