@@ -67,7 +67,7 @@
     "faker": "^4.1.0",
     "husky": "^4.2.5",
     "nodemon": "^2.0.4",
-    "prettier": "^2.1.2",
+    "prettier": "git://github.com/prettier/prettier.git#bdc8bf0de3b0d182bb5efdb050e4ab3740501e90",
     "rimraf": "^3.0.2",
     "source-map-loader": "^1.1.1",
     "typescript": "^4.1.0-dev.20201028"
