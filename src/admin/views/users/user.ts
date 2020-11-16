@@ -1,6 +1,6 @@
 import type { Form } from "@ditojs/admin";
 
-export const admin : Form = {
+export const user : Form = {
   components: {
     username: {
       type: 'text',

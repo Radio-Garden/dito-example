@@ -4,7 +4,7 @@ import type { User } from "@/models/user";
 export const users : View<User> = {
   type: 'list',
   label: 'Users',
-  form: import('./admin'),
+  form: import('./user'),
   itemLabel: 'username',
   resource: {
     path: 'users'
