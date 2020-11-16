@@ -43,11 +43,8 @@ export class Users extends UserController<User> {
     },
     async 'after:collection:find'(ctx, result) {
       const user = await getSessionUser(ctx)
-      if (
-        !user.roles.some((role) => role === 'superuser' || role === 'admin')
-      ) {
-        // Editors can only edit themselves:
-        const results = result.results.filter(({ id }: User) => user.id === id);
+      if (!user.roles.includes('superuser')) {
+        const results = result.results.filter(({ id }: User) => user.id === id)
         result = {
           results,
           total: results.length
