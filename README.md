@@ -1,8 +1,8 @@
-# Dito.js Example
+# Dito.js Typescript Example
 
 More documentation coming soon.
 
-To run the example ap, type:
+To run the example app, type:
 
 ```sh
 yarn install
