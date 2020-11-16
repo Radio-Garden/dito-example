@@ -31,9 +31,9 @@ export class Users extends UserController<User> {
       // Notify user if they tried editing roles without having the rights
       // to do so:
       if (!sessionUser.roles.includes('superuser')) {
-        const { body } = ctx.request
-        const user = await User.query(ctx.transaction).findById(body.id)
-        if (JSON.stringify(body.roles) !== JSON.stringify(user.roles)) {
+        const { id, roles } = ctx.request.body as User;
+        const user = await User.query(ctx.transaction).findById(id)
+        if (JSON.stringify(roles) !== JSON.stringify(user.roles)) {
           throw new AuthorizationError(
             'You are not authorized to edit user roles.'
           )
@@ -56,6 +56,6 @@ export class Users extends UserController<User> {
 }
 
 function getSessionUser(ctx: KoaContext) {
-  const [, id]: string = (ctx.session?.passport?.user || '').split('-')
+  const [, id] = (ctx.session?.passport?.user || '').split('-')
   return User.query(ctx.transaction).findById(id)
 }
