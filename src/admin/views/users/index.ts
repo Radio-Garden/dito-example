@@ -1,7 +1,10 @@
-import type { View } from '@ditojs/admin';
-import type { User } from "@/models/user";
+import type { View } from '@ditojs/admin'
+import type { User } from '@/models/user'
 
-export const users : View<User> = {
+const isSuperuser = ({ user }: { user: User }) =>
+  user.roles.includes('superuser')
+
+export const users: View<User> = {
   type: 'list',
   label: 'Users',
   form: import('./user'),
@@ -15,8 +18,8 @@ export const users : View<User> = {
       render: ({ value }) => value.join(', ')
     }
   },
-  creatable: true,
-  deletable: true,
+  creatable: isSuperuser,
+  deletable: isSuperuser,
   editable: true,
   paginate: 20
 }

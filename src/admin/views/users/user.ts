@@ -16,7 +16,8 @@ export const user : Form = {
       type: 'checkboxes',
       width: 'auto',
       options: ['admin', 'editor', 'superuser'],
-      layout: 'horizontal'
+      layout: 'horizontal',
+      disabled: ({ user }) => !user.roles.includes('superuser')
     }
   }
 }
