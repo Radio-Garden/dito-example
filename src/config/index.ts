@@ -1,4 +1,4 @@
-import { merge } from "@ditojs/utils"
+import { merge } from '@ditojs/utils'
 import type LocalConfig from './index.local'
 import type ProductionConfig from './index.production'
 import type DevelopmentConfig from './index.development'
@@ -37,8 +37,16 @@ const config = {
     // Details to be defined in `config.local.js` / `config.ENV.js`
   },
 
-  admin: { // Used by AdminController
+  admin: {
+    // Used by AdminController
     mode: env === 'development' ? 'development' : 'production',
+    plugins: [
+      '@vue/cli-plugin-babel',
+      {
+        id: '@vue/cli-plugin-typescript',
+        apply: require('@vue/cli-plugin-typescript')
+      }
+    ],
     build: {
       path: './src/admin',
       eslint: false
@@ -72,7 +80,7 @@ const config = {
 function loadConfig<T>(type: string): T | null {
   try {
     const config = require(`./index.${type}`)
-    return config && config.default || config || null
+    return (config && config.default) || config || null
   } catch (e) {
     return null
   }

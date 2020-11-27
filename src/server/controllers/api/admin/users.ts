@@ -1,9 +1,7 @@
 import {
   AuthorizationError,
   KoaContext,
-  ModelControllerActions,
   ModelControllerHooks,
-  ModelControllerMemberActions,
   UserController
 } from '@ditojs/server'
 import { User } from '@/models/user'
@@ -11,7 +9,7 @@ import { User } from '@/models/user'
 export class Users extends UserController<User> {
   modelClass = User
 
-  collection: ModelControllerActions<Users> = {
+  collection = {
     allow: ['find', 'insert', 'login', 'logout', 'session', 'self'],
     authorize: {
       find: ['superuser', 'admin', 'editor'],
@@ -20,16 +18,16 @@ export class Users extends UserController<User> {
     }
   }
 
-  member: ModelControllerMemberActions<Users> = {
+  member = {
     allow: ['find', 'delete', 'patch'],
     authorize: ['$self', 'superuser']
   }
 
   hooks: ModelControllerHooks<Users> = {
     async 'before:member:patch'(ctx) {
-      const sessionUser = await getSessionUser(ctx)
       // Notify user if they tried editing roles without having the rights
       // to do so:
+      const sessionUser : User = ctx.state.user;
       if (!sessionUser.roles.includes('superuser')) {
         const { id, roles } = ctx.request.body as User;
         const user = await User.query(ctx.transaction).findById(id)
@@ -42,7 +40,7 @@ export class Users extends UserController<User> {
       }
     },
     async 'after:collection:find'(ctx, result) {
-      const user = await getSessionUser(ctx)
+      const user : User = ctx.state.user;
       if (!user.roles.includes('superuser')) {
         const results = result.results.filter(({ id }: User) => user.id === id)
         result = {
@@ -53,9 +51,4 @@ export class Users extends UserController<User> {
       return result
     }
   }
-}
-
-function getSessionUser(ctx: KoaContext) {
-  const [, id] = (ctx.session?.passport?.user || '').split('-')
-  return User.query(ctx.transaction).findById(id)
 }
