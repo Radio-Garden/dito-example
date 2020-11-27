@@ -16,6 +16,6 @@
     "strictPropertyInitialization": false,
     "strictFunctionTypes": false
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./src/admin/**/*.vue"],
   "exclude": ["node_modules"]
 }
