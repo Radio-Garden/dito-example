@@ -3,5 +3,6 @@
         "creatable",
         "deletable",
         "labelize"
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
