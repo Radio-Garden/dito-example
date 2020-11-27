@@ -17,7 +17,7 @@ export const user : Form = {
       width: 'auto',
       options: ['admin', 'editor', 'superuser'],
       layout: 'horizontal',
-      disabled: ({ user }) => !user.roles.includes('superuser')
+      if: 'superuser'
     }
   }
 }
